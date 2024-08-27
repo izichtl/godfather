@@ -5,18 +5,34 @@ import { v4 } from 'uuid'
 const router: Router = express.Router()
 router.use(express.json())
 import { children as data } from '../storage/local-children-data';
-router.post('/create', async (req: Request, res: Response) => {
+
+
+router.post('/create', 
+  async (req: Request, res: Response) => {
+
+
   try {
     const { name, email, phone } = req.body; 
+    
     const children = data;
 
     const godfather = new GodfatherModel({ name, email, phone, children });
+    
+    
+    
+    
     await godfather.save();
+
     res.status(201).json(godfather);
+
+
   } catch (err) {
-      res.status(400).json({ error: err.message });
-    }
+    
+    res.status(400).json({ error: err.message });
+    
   }
+  }
+
 )
 
 // router.delete('/', async (req: Request, res: Response) => {
@@ -26,10 +42,14 @@ router.post('/create', async (req: Request, res: Response) => {
 //   })
 // })
 
-router.get('/', async (req: Request, res: Response) => {
+router.get('/:id', async (req: Request, res: Response) => {
+  console.log(req.params);
+
   try {
-    const data = await GodfatherModel.find({})
-    res.status(200).json({ data: data });
+    const data = await GodfatherModel.find({_id: req.params.id})
+    res.status(200).json(
+      { data: data }
+    );
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
