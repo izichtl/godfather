@@ -5,7 +5,6 @@ export interface IChildren extends Document {
   nascimento: string;
   sexo: string;
   presente: string;
-  padrinho: string;
 }
 
 const UserSchema: Schema<IChildren> = new Schema({
@@ -13,7 +12,6 @@ const UserSchema: Schema<IChildren> = new Schema({
   nascimento: { type: String, required: true},
   sexo: { type: String, required: true},
   presente: { type: String, required: true },
-  padrinho: { type: String, required: false }
 });
 
 const ChildrenModel = mongoose.model<IChildren>('Children', UserSchema);

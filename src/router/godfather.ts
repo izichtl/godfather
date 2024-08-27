@@ -4,15 +4,13 @@ import GodfatherModel from '../model/godfather'
 import { v4 } from 'uuid'
 const router: Router = express.Router()
 router.use(express.json())
-
+import { children as data } from '../storage/local-children-data';
 router.post('/create', async (req: Request, res: Response) => {
   try {
-    // const { name, email, phone } = req.body; 
-    const name = v4()
-    const email = v4()
-    const phone = v4()
+    const { name, email, phone } = req.body; 
+    const children = data;
 
-    const godfather = new GodfatherModel({ name, email, phone });
+    const godfather = new GodfatherModel({ name, email, phone, children });
     await godfather.save();
     res.status(201).json(godfather);
   } catch (err) {
